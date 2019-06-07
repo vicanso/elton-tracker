@@ -16,6 +16,7 @@ package tracker
 
 import (
 	"encoding/json"
+	"errors"
 	"regexp"
 
 	"github.com/vicanso/cod"
@@ -29,7 +30,8 @@ const (
 )
 
 var (
-	defaultMaskFields = regexp.MustCompile(`password`)
+	defaultMaskFields  = regexp.MustCompile(`password`)
+	errNoTrackFunction = errors.New("require on track function")
 )
 
 type (
@@ -74,7 +76,7 @@ func New(config Config) cod.Handler {
 		mask = defaultMaskFields
 	}
 	if config.OnTrack == nil {
-		panic("require on track function")
+		panic(errNoTrackFunction)
 	}
 	skipper := config.Skipper
 	if skipper == nil {
