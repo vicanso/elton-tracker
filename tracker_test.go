@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/vicanso/cod"
+	"github.com/vicanso/elton"
 )
 
 func TestNoTrackPanic(t *testing.T) {
@@ -41,7 +41,7 @@ func TestTracker(t *testing.T) {
 	customErr := errors.New("abcd")
 	done := false
 	fn := New(Config{
-		OnTrack: func(info *Info, _ *cod.Context) {
+		OnTrack: func(info *Info, _ *elton.Context) {
 			assert.Equal(info.Result, HandleFail)
 			assert.Equal(info.Query["type"], "1")
 			assert.Equal(info.Query["passwordType"], "***")
@@ -51,7 +51,7 @@ func TestTracker(t *testing.T) {
 		},
 	})
 	req := httptest.NewRequest("POST", "/users/login?type=1&passwordType=2", nil)
-	c := cod.NewContext(nil, req)
+	c := elton.NewContext(nil, req)
 	c.RequestBody = []byte(`{
 		"account": "tree.xie",
 		"password": "password"

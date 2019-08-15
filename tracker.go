@@ -19,7 +19,7 @@ import (
 	"errors"
 	"regexp"
 
-	"github.com/vicanso/cod"
+	"github.com/vicanso/elton"
 )
 
 const (
@@ -45,12 +45,12 @@ type (
 		Err    error                  `json:"err,omitempty"`
 	}
 	// OnTrack on track function
-	OnTrack func(*Info, *cod.Context)
+	OnTrack func(*Info, *elton.Context)
 	// Config tracker config
 	Config struct {
 		OnTrack OnTrack
 		Mask    *regexp.Regexp
-		Skipper cod.Skipper
+		Skipper elton.Skipper
 	}
 )
 
@@ -70,7 +70,7 @@ func convertMap(data map[string]string, mask *regexp.Regexp) map[string]string {
 }
 
 // New create a tracker middleware
-func New(config Config) cod.Handler {
+func New(config Config) elton.Handler {
 	mask := config.Mask
 	if mask == nil {
 		mask = defaultMaskFields
@@ -80,9 +80,9 @@ func New(config Config) cod.Handler {
 	}
 	skipper := config.Skipper
 	if skipper == nil {
-		skipper = cod.DefaultSkipper
+		skipper = elton.DefaultSkipper
 	}
-	return func(c *cod.Context) (err error) {
+	return func(c *elton.Context) (err error) {
 		if skipper(c) {
 			return c.Next()
 		}
