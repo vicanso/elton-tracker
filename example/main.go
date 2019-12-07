@@ -1,14 +1,8 @@
-# elton-tracker
-
-[![Build Status](https://img.shields.io/travis/vicanso/elton-tracker.svg?label=linux+build)](https://travis-ci.org/vicanso/elton-tracker)
-
-Tracker middleware for elton, it can track route params, include query, params, form and handle result.
-
-```go
 package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 
 	"github.com/vicanso/elton"
@@ -24,7 +18,8 @@ func main() {
 
 	loginTracker := tracker.New(tracker.Config{
 		OnTrack: func(info *tracker.Info, _ *elton.Context) {
-			fmt.Println(info)
+			buf, _ := json.Marshal(info)
+			fmt.Println(string(buf))
 		},
 	})
 
@@ -34,7 +29,8 @@ func main() {
 		return
 	})
 
-	d.ListenAndServe(":3000")
+	err := d.ListenAndServe(":3000")
+	if err != nil {
+		panic(err)
+	}
 }
-
-```

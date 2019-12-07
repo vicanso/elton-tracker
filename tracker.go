@@ -92,7 +92,7 @@ func New(config Config) elton.Handler {
 		var form map[string]interface{}
 		if len(c.RequestBody) != 0 {
 			form = make(map[string]interface{})
-			json.Unmarshal(c.RequestBody, &form)
+			_ = json.Unmarshal(c.RequestBody, &form)
 			for k := range form {
 				if mask.MatchString(k) {
 					form[k] = "***"
