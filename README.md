@@ -1,5 +1,7 @@
 # elton-tracker
 
+The middleware has been archived, please use the middleware of [elton](https://github.com/vicanso/elton).
+
 [![Build Status](https://img.shields.io/travis/vicanso/elton-tracker.svg?label=linux+build)](https://travis-ci.org/vicanso/elton-tracker)
 
 Tracker middleware for elton, it can track route params, include query, params, form and handle result.
